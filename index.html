@@ -4,19 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Analisis Weton Spiritual Eksklusif</title>
-    <!-- Memanggil Framework CSS Tailwind -->
+    <!-- Tailwind CSS alternatif via CDN Link agar stabil -->
     <link href="https://jsdelivr.net" rel="stylesheet">
-    <!-- Memanggil File Style Khusus untuk Animasi Background -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="min-h-screen flex items-center justify-center p-4">
 
-    <!-- Efek Background GIF Animasi (Akan diatur di style.css) -->
+    <!-- Efek Background GIF Animasi -->
     <div class="dragon-bg"></div>
     <div class="phoenix-bg"></div>
 
     <!-- Container Utama Website -->
-    <div class="bg-white/95 backdrop-blur-sm p-8 rounded-2xl shadow-2xl w-full max-w-xl border border-gray-100 my-10 relative z-10">
+    <div class="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-xl border border-gray-100 my-10 relative z-10">
         
         <!-- Judul Website -->
         <h1 class="text-3xl font-extrabold text-center text-amber-600 tracking-wide mb-2 uppercase">
@@ -25,102 +24,109 @@
         
         <!-- Deskripsi Website -->
         <p class="text-sm text-gray-600 text-center mb-8 leading-relaxed">
-            Buka rahasia takdir, rezeki, dan karakter spiritual Anda melalui penyelarasan energi leluhur Nusantara. Isi formulir di bawah ini dengan lengkap untuk memulai proses analisis mendalam.
+            Buka rahasia takdir, rezeki, dan karakter spiritual Anda melalui penyelarasan energi leluhur Nusantara.
         </p>
         
-        <!-- FORM UTAMA INTEGRASI WEB3FORMS -->
-        <!-- Catatan: Ganti "YOUR_ACCESS_KEY_HERE" dengan Access Key asli dari web3forms.com saat dionlinekan -->
+        <!-- FORM UTAMA -->
         <form id="masterForm" action="https://web3forms.com" method="POST" class="space-y-5">
+            <!-- Ganti dengan Access Key Web3Forms Anda -->
             <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
             <input type="hidden" name="subject" value="Pesanan Analisis Weton Baru">
 
-            <!-- 1. Kolom Username -->
-            <div>
-                <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Nama Pengguna (Username)</label>
-                <input type="text" id="username" name="username" required placeholder="Masukkan nama lengkap Anda" 
-                       class="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:outline-none transition">
-            </div>
+            <!-- ================= STEP 1: IDENTITAS & BAYAR (MUNCUL DI AWAL) ================= -->
+            <div id="step1" class="space-y-5">
+                <!-- 1. Kolom Username -->
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Nama Lengkap</label>
+                    <input type="text" id="username" name="username" required placeholder="Masukkan nama lengkap Anda" 
+                           class="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:outline-none transition">
+                </div>
 
-            <!-- 2. Kelahiran Datepicker -->
-            <div>
-                <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Tanggal Kelahiran</label>
-                <input type="date" id="birthdate" name="birthdate" required 
-                       class="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:outline-none transition">
-            </div>
+                <!-- 2. Kelahiran Datepicker -->
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Tanggal Kelahiran</label>
+                    <input type="date" id="birthdate" name="birthdate" required 
+                           class="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:outline-none transition">
+                </div>
 
-            <!-- 3. Pilihan Weton Dropdown -->
-            <div>
-                <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Pilihan Pasaran Weton</label>
-                <select id="weton" name="pasaran_weton" required 
-                        class="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:outline-none transition bg-white">
-                    <option value="" disabled selected>-- Pilih Pasaran Kelahiran --</option>
-                    <option value="Legi">Legi</option>
-                    <option value="Pahing">Pahing</option>
-                    <option value="Pon">Pon</option>
-                    <option value="Wage">Wage</option>
-                    <option value="Kliwon">Kliwon</option>
-                </select>
-            </div>
+                <!-- 3. Pilihan Weton Dropdown -->
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Pilihan Pasaran Weton</label>
+                    <select id="weton" name="pasaran_weton" required 
+                            class="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:outline-none transition bg-white">
+                        <option value="" disabled selected>-- Pilih Pasaran Kelahiran --</option>
+                        <option value="Legi">Legi</option>
+                        <option value="Pahing">Pahing</option>
+                        <option value="Pon">Pon</option>
+                        <option value="Wage">Wage</option>
+                        <option value="Kliwon">Kliwon</option>
+                    </select>
+                </div>
 
-            <!-- 4. Pembayaran Pay Dana Redirect (Aman & Privat) -->
-            <div class="bg-amber-50 border border-amber-200 p-4 rounded-xl">
-                <label class="block text-xs font-bold text-amber-800 uppercase tracking-wider mb-2">Langkah Pembayaran DANA</label>
-                <!-- Silakan ganti link tautan di bawah ini dengan shortlink DANA Anda -->
-                <a href="https://s.id" target="_blank" id="payDanaBtn"
-                   class="inline-flex items-center justify-center w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg text-sm transition mb-1 text-center">
-                    🔹 Klik di Sini untuk Bayar via DANA 🔹
-                </a>
-                <p class="text-[11px] text-gray-500 text-center mt-1">Nomor admin disamarkan demi keamanan privasi transaksi.</p>
-            </div>
-
-            <!-- 5. Upload Screenshot Hasil Pembayaran -->
-            <div>
-                <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Upload Bukti Pembayaran</label>
-                <div class="flex items-center space-x-3">
-                    <label class="flex-1 flex flex-col items-center px-4 py-2 bg-white text-gray-700 rounded-xl border border-gray-300 tracking-wide uppercase cursor-pointer hover:bg-gray-50 text-xs font-semibold">
-                        <span id="uploadLabel">Pilih File Screenshot</span>
-                        <input type='file' id="screenshot" accept="image/*" class="hidden" required />
-                    </label>
-                    <!-- Indikator Centang Hijau Bukti Bayar -->
-                    <span id="checkScreenshot" style="display: none;" class="text-green-600 text-xl font-bold">✅</span>
+                <!-- 4. Fitur Pembayaran DANA -->
+                <div class="bg-amber-50 border border-amber-200 p-4 rounded-xl text-center">
+                    <label class="block text-xs font-bold text-amber-800 uppercase tracking-wider mb-2">Langkah Pembayaran DANA</label>
+                    <!-- Ganti link tautan di bawah ini dengan shortlink DANA Anda -->
+                    <a href="https://s.id" target="_blank" id="payDanaBtn"
+                       class="inline-flex items-center justify-center w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 px-4 rounded-xl text-sm transition">
+                        🔹 Klik di Sini untuk Bayar via DANA 🔹
+                    </a>
+                    <p class="text-[11px] text-gray-500 mt-1">Selesaikan pembayaran di aplikasi DANA, ambil screenshot bukti bayar, lalu kembali ke halaman ini.</p>
                 </div>
             </div>
 
-            <!-- 6. Kolom Email Client -->
-            <div>
-                <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Alamat Email Anda (Untuk Menerima Jawaban)</label>
-                <div class="flex items-center space-x-3">
-                    <input type="email" id="clientEmail" name="email_client" required placeholder="nama@email.com" 
-                           class="flex-1 px-4 py-2.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:outline-none transition">
-                    <!-- Indikator Centang Hijau Email -->
-                    <span id="checkEmail" style="display: none;" class="text-green-600 text-xl font-bold">✅</span>
+            <!-- ================= STEP 2: VERIFIKASI (TERSEMBUNYI DI AWAL) ================= -->
+            <!-- Menggunakan inline style display:none agar mutlak tersembunyi saat web dimuat -->
+            <div id="step2" style="display: none;" class="space-y-5 border-t border-gray-200 pt-5">
+                
+                <!-- 5. Upload Screenshot Hasil Pembayaran -->
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Upload Bukti Pembayaran</label>
+                    <div class="flex items-center space-x-3">
+                        <label class="flex-1 flex flex-col items-center px-4 py-2 bg-white text-gray-700 rounded-xl border border-gray-300 tracking-wide uppercase cursor-pointer hover:bg-gray-50 text-xs font-semibold">
+                            <span id="uploadLabel">Pilih File Screenshot</span>
+                            <input type='file' id="screenshot" accept="image/*" class="hidden" />
+                        </label>
+                        <!-- Indikator Centang Hijau Bukti Bayar -->
+                        <span id="checkScreenshot" style="display: none;" class="text-green-600 text-xl font-bold">✅</span>
+                    </div>
                 </div>
-            </div>
 
-            <!-- 6(b). Kolom Komentar -->
-            <div>
-                <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Catatan Tambahan / Komentar</label>
-                <textarea id="comment" name="komentar_tambahan" rows="3" placeholder="Tuliskan catatan khusus atau pertanyaan Anda jika ada..." 
-                          class="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:outline-none transition resize-none"></textarea>
-            </div>
+                <!-- 6. Kolom Email Client -->
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Alamat Email Anda (Menerima Jawaban)</label>
+                    <div class="flex items-center space-x-3">
+                        <input type="email" id="clientEmail" name="email_client" placeholder="nama@email.com" 
+                               class="flex-1 px-4 py-2.5 border border-gray-300 rounded-xl focus:outline-none transition">
+                        <!-- Indikator Centang Hijau Email -->
+                        <span id="checkEmail" style="display: none;" class="text-green-600 text-xl font-bold">✅</span>
+                    </div>
+                </div>
 
-            <!-- 7. Button Analisis (Dikunci hingga form valid sepenuhnya) -->
-            <button type="submit" id="submitBtn" disabled
-                    class="w-full bg-gray-400 text-white font-bold py-3 px-4 rounded-xl cursor-not-allowed transition duration-300 uppercase tracking-wider text-sm shadow-md">
-                Kunci Semua Informasi & Analis
-            </button>
+                <!-- 6(b). Kolom Komentar -->
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Catatan Tambahan / Komentar</label>
+                    <textarea id="comment" name="komentar_tambahan" rows="3" placeholder="Tuliskan catatan khusus atau pertanyaan Anda jika ada..." 
+                              class="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:outline-none transition resize-none"></textarea>
+                </div>
+
+                <!-- 7. Button Analisis (Dikunci hingga form valid sepenuhnya) -->
+                <button type="submit" id="submitBtn" disabled style="background-color: #9ca3af;"
+                        class="w-full text-white font-bold py-3 px-4 rounded-xl cursor-not-allowed transition duration-300 uppercase tracking-wider text-sm shadow-md">
+                    Kunci Semua Informasi & Analis
+                </button>
+            </div>
         </form>
 
-        <!-- 5(b) & 8. Textbox Informasi Sukses & Pengolahan Data (Default Tersembunyi) -->
-        <!-- 5(b) & 8. Textbox Informasi Sukses & Pengolahan Data (Default Tersembunyi) -->
-<div id="infoSuccess" style="display: none;" class="mt-6 space-y-3">
+        <!-- 5(b) & 8. Textbox Informasi Sukses & Pengolahan Data (Muncul SETELAH submit) -->
+        <div id="infoSuccess" style="display: none;" class="mt-6 space-y-3">
             <div class="bg-green-50 border border-green-200 p-4 rounded-xl text-center">
                 <p class="text-green-800 font-bold text-sm">
                     🎉 Sukses! Seluruh informasi Anda telah berhasil terkirim ke sistem kami.
                 </p>
             </div>
             
-            <div class="bg-blue-50 border border-blue-200 p-4 rounded-xl text-center animate-pulse">
+            <div class="bg-blue-50 border border-blue-200 p-4 rounded-xl text-center">
                 <p class="text-blue-900 font-semibold text-xs leading-relaxed">
                     ⚙️ Sistem sedang memproses data weton Anda. Silakan periksa kotak masuk atau folder spam <span class="font-bold underline text-blue-700">Email Anda</span> secara berkala untuk mendapatkan dokumen informasi hasil analisis lengkap.
                 </p>
@@ -129,8 +135,7 @@
 
     </div>
 
-    <!-- Memanggil File Logika Validasi dan Pengiriman -->
     <script src="script.js"></script>
 </body>
-  </html>
-  
+    </html>
+                            
