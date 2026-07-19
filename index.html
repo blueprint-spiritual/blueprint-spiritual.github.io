@@ -82,7 +82,7 @@
                         <input type='file' id="screenshot" accept="image/*" class="hidden" required />
                     </label>
                     <!-- Indikator Centang Hijau Bukti Bayar -->
-                    <span id="checkScreenshot" class="text-green-600 text-xl font-bold opacity-0 transition-opacity duration-300">✅</span>
+                    <span id="checkScreenshot" style="display: none;" class="text-green-600 text-xl font-bold">✅</span>
                 </div>
             </div>
 
@@ -93,7 +93,7 @@
                     <input type="email" id="clientEmail" name="email_client" required placeholder="nama@email.com" 
                            class="flex-1 px-4 py-2.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:outline-none transition">
                     <!-- Indikator Centang Hijau Email -->
-                    <span id="checkEmail" class="text-green-600 text-xl font-bold opacity-0 transition-opacity duration-300">✅</span>
+                    <span id="checkEmail" style="display: none;" class="text-green-600 text-xl font-bold">✅</span>
                 </div>
             </div>
 
@@ -112,7 +112,8 @@
         </form>
 
         <!-- 5(b) & 8. Textbox Informasi Sukses & Pengolahan Data (Default Tersembunyi) -->
-        <div id="infoSuccess" class="hidden mt-6 space-y-3">
+        <!-- 5(b) & 8. Textbox Informasi Sukses & Pengolahan Data (Default Tersembunyi) -->
+<div id="infoSuccess" style="display: none;" class="mt-6 space-y-3">
             <div class="bg-green-50 border border-green-200 p-4 rounded-xl text-center">
                 <p class="text-green-800 font-bold text-sm">
                     🎉 Sukses! Seluruh informasi Anda telah berhasil terkirim ke sistem kami.
