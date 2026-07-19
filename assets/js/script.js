@@ -1,8 +1,7 @@
 /* ==========================================
-   LOGIKA VALIDASI & INTERAKSI FORMULIR
+   LOGIKA VALIDASI & INTERAKSI FORMULIR (STABLE)
    ========================================== */
 
-// 1. Inisialisasi Semua Elemen Input dari HTML
 const form = document.getElementById('masterForm');
 const username = document.getElementById('username');
 const birthdate = document.getElementById('birthdate');
@@ -11,72 +10,55 @@ const screenshot = document.getElementById('screenshot');
 const clientEmail = document.getElementById('clientEmail');
 const submitBtn = document.getElementById('submitBtn');
 
-// 2. Inisialisasi Elemen UI Indikator (Centang & Info)
 const uploadLabel = document.getElementById('uploadLabel');
 const checkScreenshot = document.getElementById('checkScreenshot');
 const checkEmail = document.getElementById('checkEmail');
 const infoSuccess = document.getElementById('infoSuccess');
 
-/**
- * Fungsi Utama untuk Memeriksa Validitas Formulir secara Real-time
- */
 function checkFormValidity() {
-    // Validasi file screenshot (harus ada file yang diunggah)
     let isScreenshotValid = screenshot.files.length > 0;
-    
-    // Validasi email sederhana (harus mengandung karakter '@' dan '.')
     let isEmailValid = clientEmail.value.includes('@') && clientEmail.value.includes('.');
-    
-    // Validasi input teks biasa (tidak boleh kosong)
     let isTextInputsValid = username.value.trim() !== "" && birthdate.value !== "" && weton.value !== "";
 
-    // Atur Tampilan Indikator Centang Hijau Bukti Bayar
+    // Kontrol Tampilan Centang Bukti Bayar murni pakai JavaScript style
     if (isScreenshotValid) {
-        checkScreenshot.classList.remove('opacity-0');
+        checkScreenshot.style.display = "inline-block";
         uploadLabel.innerText = "File Berhasil Dipilih";
     } else {
-        checkScreenshot.classList.add('opacity-0');
+        checkScreenshot.style.display = "none";
         uploadLabel.innerText = "Pilih File Screenshot";
     }
 
-    // Atur Tampilan Indikator Centang Hijau Email Client
+    // Kontrol Tampilan Centang Email murni pakai JavaScript style
     if (isEmailValid) {
-        checkEmail.classList.remove('opacity-0');
+        checkEmail.style.display = "inline-block";
     } else {
-        checkEmail.classList.add('opacity-0');
+        checkEmail.style.display = "none";
     }
 
-    // Aktifkan atau Matikan Tombol Submit Berdasarkan Validasi Seluruh Form
+    // Mengaktifkan / Mengunci Tombol Analisis
     if (isScreenshotValid && isEmailValid && isTextInputsValid) {
-        // Jika SEMUA informasi valid, buka kunci tombol
         submitBtn.removeAttribute('disabled');
-        submitBtn.classList.remove('bg-gray-400', 'cursor-not-allowed');
-        // Berikan warna gradasi amber emas modern khas tema spiritual
-        submitBtn.classList.add('bg-gradient-to-r', 'from-amber-500', 'to-amber-600', 'hover:from-amber-600', 'hover:to-amber-700', 'cursor-pointer');
+        submitBtn.style.backgroundColor = "#d97706"; /* Warna emas/amber */
+        submitBtn.style.cursor = "pointer";
     } else {
-        // Jika ada satu saja yang belum diisi, kunci kembali tombolnya
         submitBtn.setAttribute('disabled', 'true');
-        submitBtn.classList.add('bg-gray-400', 'cursor-not-allowed');
-        submitBtn.classList.remove('bg-gradient-to-r', 'from-amber-500', 'to-amber-600', 'hover:from-amber-600', 'hover:to-amber-700', 'cursor-pointer');
+        submitBtn.style.backgroundColor = "#9ca3af"; /* Warna abu-abu */
+        submitBtn.style.cursor = "not-allowed";
     }
 }
 
-// 3. Pasang Event Listener untuk Memantau Setiap Perubahan Input Pengunjung
+// Pasang Event Listener
 username.addEventListener('input', checkFormValidity);
 birthdate.addEventListener('input', checkFormValidity);
 weton.addEventListener('change', checkFormValidity);
 clientEmail.addEventListener('input', checkFormValidity);
 screenshot.addEventListener('change', checkFormValidity);
 
-/**
- * Menangani Event saat Formulir Dikirim (Submit)
- */
+// Menampilkan informasi sukses HANYA setelah tombol diklik (Form dikirim)
 form.addEventListener('submit', function(e) {
-    // Catatan: Jangan gunakan e.preventDefault() secara permanen agar Web3Forms bisa memproses pengiriman data ke email Anda.
-    
-    // Memunculkan kotak informasi sukses dan instruksi proses data di bagian bawah form
-    infoSuccess.classList.remove('hidden');
-    
-    // Geser layar secara mulus ke arah kotak informasi sukses agar terbaca jelas oleh user
+    // Memunculkan kotak info secara paksa dengan JavaScript style
+    infoSuccess.style.display = "block";
     infoSuccess.scrollIntoView({ behavior: 'smooth' });
 });
+       
