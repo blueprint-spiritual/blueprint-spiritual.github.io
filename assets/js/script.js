@@ -1,5 +1,5 @@
 /* ==========================================
-   LOGIKA VALIDASI BERTAHAP (STEP-BY-STEP FORM)
+   LOGIKA VALIDASI BERTAHAP (MOBILE ACCURATE)
    ========================================== */
 
 const form = document.getElementById('masterForm');
@@ -20,13 +20,23 @@ const checkScreenshot = document.getElementById('checkScreenshot');
 const checkEmail = document.getElementById('checkEmail');
 const infoSuccess = document.getElementById('infoSuccess');
 
-// ALUR 1: Ketika user klik tombol bayar DANA, buka Step 2
-payDanaBtn.addEventListener('click', function() {
-    // Beri sedikit jeda agar tab baru DANA terbuka dulu, baru form bawah muncul di tab lama
+// MASUKKAN LINK PENDEK DANA ABANG DI SINI
+const LINK_PEMBAYARAN_DANA = "https://rb.gy/d8a9zf"; 
+
+// ALUR 1: Menggunakan window.open agar tombol dipaksa responsif di browser HP
+payDanaBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    
+    // Buka aplikasi DANA / link transfer di tab baru secara paksa
+    window.open(LINK_PEMBAYARAN_DANA, '_blank');
+    
+    // LANGSUNG munculkan form tahap dua tanpa delay agar tidak gagal sensor
+    step2Container.style.display = 'block';
+    
+    // Geser layar ke form baru secara halus
     setTimeout(() => {
-        step2Container.style.display = 'block';
         step2Container.scrollIntoView({ behavior: 'smooth' });
-    }, 1000);
+    }, 300);
 });
 
 // ALUR 2: Fungsi validasi input di Step 2 untuk membuka gembok tombol submit
@@ -54,11 +64,11 @@ function checkFormValidity() {
     // Buka kunci tombol Analisis jika seluruh syarat terpenuhi
     if (isScreenshotValid && isEmailValid && isIdentityValid) {
         submitBtn.removeAttribute('disabled');
-        submitBtn.style.backgroundColor = "#d97706"; // Warna Emas Erat/Amber
+        submitBtn.style.backgroundColor = "#d97706"; // Warna Emas
         submitBtn.style.cursor = "pointer";
     } else {
         submitBtn.setAttribute('disabled', 'true');
-        submitBtn.style.backgroundColor = "#9ca3af"; // Warna Abu-abu jika dikunci
+        submitBtn.style.backgroundColor = "#9ca3af"; // Warna Abu-abu
         submitBtn.style.cursor = "not-allowed";
     }
 }
@@ -72,8 +82,7 @@ screenshot.addEventListener('change', checkFormValidity);
 
 // ALUR 3: Ketika Tombol Analisis diklik & Form sukses terkirim
 form.addEventListener('submit', function(e) {
-    // Memunculkan kotak informasi sukses di paling bawah
     infoSuccess.style.display = "block";
     infoSuccess.scrollIntoView({ behavior: 'smooth' });
 });
-   
+                                                  
