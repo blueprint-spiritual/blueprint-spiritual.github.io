@@ -1,6 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
-    console.log("FIX Weton Loaded");
-
+document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('masterForm');
     const username = document.getElementById('username');
     const birthdate = document.getElementById('birthdate');
@@ -8,98 +6,104 @@ document.addEventListener('DOMContentLoaded', function() {
     const screenshot = document.getElementById('screenshot');
     const clientEmail = document.getElementById('clientEmail');
     const submitBtn = document.getElementById('submitBtn');
+    const comment = document.getElementById('comment');
 
     const uploadLabel = document.getElementById('uploadLabel');
+    const fileNameInfo = document.getElementById('fileNameInfo');
     const checkScreenshot = document.getElementById('checkScreenshot');
     const checkEmail = document.getElementById('checkEmail');
+    const statusInfo = document.getElementById('statusInfo');
     const infoSuccess = document.getElementById('infoSuccess');
 
-    // FUNGSI CEK FILE - INI YANG BIKIN NAMA FILE MUNCUL
-    screenshot.addEventListener('change', function() {
-        console.log("File dipilih:", this.files[0]?.name);
-        if (this.files.length > 0) {
-            uploadLabel.innerText = "✓ " + this.files[0].name;
-            uploadLabel.classList.add("text-green-600");
-            checkScreenshot.style.display = "inline-block";
+    // 1. HANDLE PILIH FILE - BIAR NAMA FILE MUNCUL
+    screenshot.addEventListener('change', function () {
+        if (this.files && this.files[0]) {
+            const file = this.files[0];
+            uploadLabel.innerText = "✓ " + file.name;
+            uploadLabel.classList.add("text-green-700");
+            fileNameInfo.innerText = (file.size / 1024 / 1024).toFixed(2) + " MB - Siap kirim";
+            checkScreenshot.style.display = "block";
         } else {
-            uploadLabel.innerText = "Pilih File Screenshot";
-            uploadLabel.classList.remove("text-green-600");
+            uploadLabel.innerText = "KLIK UNTUK PILIH SCREENSHOT";
+            fileNameInfo.innerText = "";
             checkScreenshot.style.display = "none";
         }
-        validasiForm();
+        cekValid();
     });
 
-    function validasiForm() {
-        const adaFile = screenshot.files.length > 0;
-        const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(clientEmail.value.trim());
-        const identitasLengkap = username.value.trim()!== "" && birthdate.value!== "" && weton.value!== "";
+    // 2. FUNGSI VALIDASI BIAR TOMBOL BISA DIPENCET
+    function cekValid() {
+        const namaOk = username.value.trim().length > 2;
+        const tglOk = birthdate.value!== "";
+        const wetonOk = weton.value!== "";
+        const fileOk = screenshot.files.length > 0;
+        const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(clientEmail.value.trim());
 
-        // Tampilkan centang email
-        if(clientEmail.value.trim()!== ""){
-            checkEmail.style.display = emailValid? "inline-block" : "none";
+        if (emailOk) {
+            checkEmail.style.display = "block";
+        } else {
+            checkEmail.style.display = "none";
         }
 
-        // INI KUNCI BIAR TOMBOL BISA DIPENCET
-        if (adaFile && emailValid && identitasLengkap) {
+        if (namaOk && tglOk && wetonOk && fileOk && emailOk) {
             submitBtn.disabled = false;
-            submitBtn.style.backgroundColor = "#d97706"; // jadi orange
-            submitBtn.style.cursor = "pointer";
-            submitBtn.classList.remove("cursor-not-allowed");
-            console.log("Form VALID - Tombol Aktif");
+            submitBtn.classList.remove("bg-gray-400");
+            submitBtn.classList.add("bg-amber-600", "hover:bg-amber-700");
+            statusInfo.innerText = "✅ Siap kirim!";
+            statusInfo.classList.add("text-green-600");
+            return true;
         } else {
             submitBtn.disabled = true;
-            submitBtn.style.backgroundColor = "#9ca3af"; // abu
-            submitBtn.style.cursor = "not-allowed";
-            console.log("Form belum lengkap");
+            submitBtn.classList.add("bg-gray-400");
+            submitBtn.classList.remove("bg-amber-600", "hover:bg-amber-700");
+            statusInfo.innerText = "Lengkapi: Nama, Tgl Lahir, Weton, Screenshot, Email";
+            statusInfo.classList.remove("text-green-600");
+            return false;
         }
     }
 
-    // Pantau semua input biar tombol langsung aktif pas lengkap
-    username.addEventListener('input', validasiForm);
-    birthdate.addEventListener('change', validasiForm);
-    birthdate.addEventListener('input', validasiForm);
-    weton.addEventListener('change', validasiForm);
-    clientEmail.addEventListener('input', validasiForm);
+    username.addEventListener('input', cekValid);
+    birthdate.addEventListener('input', cekValid);
+    birthdate.addEventListener('change', cekValid);
+    weton.addEventListener('change', cekValid);
+    clientEmail.addEventListener('input', cekValid);
+    comment.addEventListener('input', cekValid);
 
-    // KIRIM KE WEB3FORMS
-    form.addEventListener('submit', async function(e) {
+    // 3. KIRIM SEMUA KOLOM KE WEB3FORMS
+    form.addEventListener('submit', async function (e) {
         e.preventDefault();
-        if (submitBtn.disabled) return;
+        if (!cekValid()) return;
 
-        const namaTombolAsli = submitBtn.innerText;
-        submitBtn.innerText = "⏳ Mengirim...";
+        const textAsli = submitBtn.innerText;
+        submitBtn.innerText = "⏳ MENGIRIM...";
         submitBtn.disabled = true;
 
         const formData = new FormData(form);
 
-        // Debug - lihat apa yang kekirim
-        for (let [key, value] of formData.entries()) {
-            console.log(key + ": ", value instanceof File? value.name : value);
-        }
-
+        // Kirim
         try {
-            const response = await fetch("https://api.web3forms.com/submit", {
+            const res = await fetch("https://api.web3forms.com/submit", {
                 method: "POST",
                 body: formData
             });
-            const data = await response.json();
+            const data = await res.json();
             if (data.success) {
                 form.style.display = "none";
                 infoSuccess.style.display = "block";
-                infoSuccess.innerHTML = `<div class="bg-green-50 border border-green-200 p-4 rounded-xl text-center"><p class="text-green-800 font-bold text-sm">🎉 Sukses! Data: ${username.value}, ${weton.value}, File: ${screenshot.files[0].name} berhasil terkirim.</p></div>`;
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             } else {
                 alert("Gagal: " + data.message);
-                submitBtn.innerText = namaTombolAsli;
+                submitBtn.innerText = textAsli;
                 submitBtn.disabled = false;
+                cekValid();
             }
         } catch (err) {
-            console.error(err);
-            alert("Koneksi error, cek internet");
-            submitBtn.innerText = namaTombolAsli;
+            alert("Koneksi error");
+            submitBtn.innerText = textAsli;
             submitBtn.disabled = false;
+            cekValid();
         }
     });
 
-    // Jalankan sekali pas load
-    validasiForm();
+    cekValid();
 });
