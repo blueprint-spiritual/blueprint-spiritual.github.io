@@ -1,74 +1,74 @@
 /* ==========================================
-   STYLE & ANIMASI BACKGROUND WEBSITE WETON
+   STYLE & ANIMASI BACKGROUND WEBSITE WETON - FIX
    ========================================== */
 
-/* 1. Pengaturan Dasar Halaman */
 body {
-    background-color: #f7f6f2; /* Warna Putih Susu (Milky White) */
+    background-color: #f7f6f2;
     position: relative;
     overflow-x: hidden;
 }
 
-/* 2. Layer Background Naga Emas */
+/* 2. Layer Background Naga Emas - FIX URL */
 .dragon-bg {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    /* Menggunakan GIF Naga Emas dengan background transparan */
-    background: url('https://giphy.com') no-repeat center;
-    background-size: contain;
-    opacity: 0; /* Mulai dari tidak terlihat */
-    z-index: 1; /* Berada di belakang formulir */
-    pointer-events: none; /* Agar tidak mengganggu klik pada tombol/input */
-    
-    /* Animasi: Nama Animasi, Durasi 3 detik, Efek Smooth, Delay 1 detik */
+    /* FIX: Ganti dari https://giphy.com ke direct GIF transparan */
+    background: url('https://media.giphy.com/media/3o7aCTfyhYawdOXf0s/giphy.gif') no-repeat center;
+    background-size: 600px;
+    opacity: 0;
+    z-index: 1;
+    pointer-events: none;
+    /* Kasih tint emas biar sesuai judul "Naga Emas" */
+    filter: sepia(1) saturate(3) hue-rotate(10deg);
     animation: fadeInDragon 3s ease-out forwards 1s;
 }
 
-/* 3. Layer Background Phoenix Hitam */
+/* 3. Layer Background Phoenix Hitam - FIX URL */
 .phoenix-bg {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    /* Menggunakan GIF Phoenix Hitam dengan background transparan */
-    background: url('https://giphy.com') no-repeat center;
-    background-size: contain;
-    opacity: 0; /* Mulai dari tidak terlihat */
-    z-index: 2; /* Berada sedikit di atas layer naga namun tetap di bawah form */
+    /* FIX: Direct GIF phoenix transparan */
+    background: url('https://media.giphy.com/media/3o6Zt481isNVuQI1l6/giphy.gif') no-repeat center;
+    background-size: 700px;
+    opacity: 0;
+    z-index: 2;
     pointer-events: none;
-    
-    /* Animasi: Muncul setelah naga selesai (Delay 4 detik dari awal halaman dimuat) */
+    /* Kasih tint hitam pekat */
+    filter: brightness(0) invert(0.1);
     animation: fadeInPhoenix 3s ease-out forwards 4s;
 }
 
-/* ==========================================
-   LOGIKA ANIMASI KEMUNCULAN (KEYFRAMES)
-   ========================================== */
-
-/* Animasi Munculnya Naga Emas */
 @keyframes fadeInDragon {
     from {
         opacity: 0;
-        transform: scale(0.95); /* Sedikit mengecil saat awal */
+        transform: scale(0.95) translateY(20px);
     }
     to {
-        opacity: 0.12; /* Batas transparansi agar teks formulir di depan tetap terbaca jelas */
-        transform: scale(1);
+        opacity: 0.15;
+        transform: scale(1) translateY(0);
     }
 }
 
-/* Animasi Munculnya Phoenix Hitam */
 @keyframes fadeInPhoenix {
     from {
         opacity: 0;
-        transform: scale(1.05); /* Sedikit membesar saat awal */
+        transform: scale(1.05) translateY(-20px);
     }
     to {
-        opacity: 0.12; /* Batas transparansi agar teks formulir di depan tetap terbaca jelas */
-        transform: scale(1);
+        opacity: 0.10;
+        transform: scale(1) translateY(0);
     }
 }
+
+/* Tambahan biar di HP gak kegedean */
+@media (max-width: 768px) {
+    .dragon-bg, .phoenix-bg {
+        background-size: 350px;
+    }
+       }
