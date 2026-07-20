@@ -1,7 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('masterForm');
-    const payDanaBtn = document.getElementById('payDanaBtn');
-    const step2Container = document.getElementById('step2');
     const username = document.getElementById('username');
     const birthdate = document.getElementById('birthdate');
     const weton = document.getElementById('weton');
@@ -12,32 +10,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const checkScreenshot = document.getElementById('checkScreenshot');
     const checkEmail = document.getElementById('checkEmail');
     const infoSuccess = document.getElementById('infoSuccess');
-
-    // --- ANTI SCRAPER: Link DANA di-encode Base64 ---
-    // aHR0cHM6Ly9yYi5neS9kOGE5emY= adalah https://rb.gy/d8a9zf
-    function getDanaLink() {
-        const part1 = "aHR0cHM6Ly9yYi5neS9k";
-        const part2 = "OGE5emY=";
-        try {
-            return atob(part1 + part2);
-        } catch(e) {
-            return "";
-        }
-    }
-
-    if(payDanaBtn){
-        payDanaBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            const realLink = getDanaLink();
-            if(realLink){
-                window.open(realLink, '_blank', 'noopener');
-            }
-            step2Container.style.display = 'block';
-            setTimeout(() => {
-                step2Container.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }, 200);
-        });
-    }
 
     function checkFormValidity() {
         const isScreenshotValid = screenshot.files.length > 0;
@@ -80,7 +52,6 @@ document.addEventListener('DOMContentLoaded', function() {
             if (data.success) {
                 form.style.display = "none";
                 infoSuccess.style.display = "block";
-                infoSuccess.scrollIntoView({ behavior: 'smooth' });
             } else {
                 alert("Gagal: " + data.message);
                 submitBtn.disabled = false;
