@@ -9,41 +9,33 @@
 </head>
 <body class="min-h-screen flex items-center justify-center p-4 bg-gray-100">
 
-    <div class="dragon-bg"></div>
-    <div class="phoenix-bg"></div>
-
     <div class="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-xl border border-gray-100 my-10 relative z-10">
-
         <h1 class="text-3xl font-extrabold text-center text-amber-600 tracking-wide mb-2 uppercase">
             Ramalan & Analisis Weton Agung
         </h1>
-        <p class="text-sm text-gray-600 text-center mb-8 leading-relaxed">
-            Buka rahasia takdir, rezeki, dan karakter spiritual Anda melalui penyelarasan energi leluhur Nusantara.
-        </p>
+        <p class="text-sm text-gray-600 text-center mb-8">Buka rahasia takdir & rezeki Anda.</p>
 
         <form id="masterForm" class="space-y-5">
-            <!-- GANTI ACCESS KEY DISINI SAJA BANG -->
-            <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
-            <input type="hidden" name="subject" value="Pesanan Analisis Weton Baru - {{username}}">
+            <!-- ACCESS KEY LU UDAH GUE TANAM -->
+            <input type="hidden" name="access_key" value="57b72712-a128-4599-b80b-42ccc142c5c8">
+            <input type="hidden" name="subject" value="Pesanan Weton Baru">
+            <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
 
             <div id="step1" class="space-y-5">
                 <div>
-                    <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Nama Lengkap</label>
-                    <input type="text" id="username" name="Nama Lengkap" required placeholder="Masukkan nama lengkap Anda"
-                           class="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:outline-none transition">
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Nama Lengkap</label>
+                    <input type="text" id="username" name="Nama Lengkap" required placeholder="Masukkan nama lengkap"
+                           class="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:outline-none">
                 </div>
-
                 <div>
-                    <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Tanggal Kelahiran</label>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Tanggal Kelahiran</label>
                     <input type="date" id="birthdate" name="Tanggal Lahir" required
-                           class="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:outline-none transition">
+                           class="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:outline-none">
                 </div>
-
                 <div>
-                    <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Pilihan Pasaran Weton</label>
-                    <select id="weton" name="Weton Pasaran" required
-                            class="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:outline-none transition bg-white">
-                        <option value="" disabled selected>-- Pilih Pasaran Kelahiran --</option>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Pilihan Pasaran Weton</label>
+                    <select id="weton" name="Weton Pasaran" required class="w-full px-4 py-2.5 border border-gray-300 rounded-xl bg-white">
+                        <option value="" disabled selected>-- Pilih --</option>
                         <option value="Legi">Legi</option>
                         <option value="Pahing">Pahing</option>
                         <option value="Pon">Pon</option>
@@ -51,73 +43,66 @@
                         <option value="Kliwon">Kliwon</option>
                     </select>
                 </div>
-
                 <div class="bg-amber-50 border border-amber-200 p-4 rounded-xl text-center">
-                    <label class="block text-xs font-bold text-amber-800 uppercase tracking-wider mb-2">Langkah Pembayaran DANA</label>
-                    <button type="button" id="payDanaBtn"
-                            class="inline-flex items-center justify-center w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 px-4 rounded-xl text-sm transition focus:outline-none">
+                    <label class="block text-xs font-bold text-amber-800 uppercase mb-2">Langkah Pembayaran DANA</label>
+                    <button type="button" id="payDanaBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 px-4 rounded-xl text-sm">
                         🔹 Klik di Sini untuk Bayar via DANA 🔹
                     </button>
-                    <p class="text-[11px] text-gray-500 mt-2">Selesaikan pembayaran, screenshot bukti, lalu kembali ke halaman ini.</p>
+                    <p class="text-[11px] text-gray-500 mt-2">Bayar dulu, screenshot, balik lagi kesini</p>
                 </div>
             </div>
 
-            <div id="step2" style="display: none;" class="space-y-5 border-t border-gray-200 pt-5">
+            <div id="step2" style="display: none;" class="space-y-5 border-t pt-5">
                 <div>
-                    <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Upload Bukti Pembayaran</label>
-                    <div class="flex items-center space-x-3">
-                        <label class="flex-1 flex flex-col items-center px-4 py-3 bg-white text-gray-700 rounded-xl border border-gray-300 tracking-wide uppercase cursor-pointer hover:bg-gray-50 text-xs font-semibold">
-                            <span id="uploadLabel">Pilih File Screenshot</span>
-                            <input type='file' id="screenshot" name="Bukti Screenshot" accept="image/*" class="hidden" required />
-                        </label>
-                        <span id="checkScreenshot" style="display: none;" class="text-green-600 text-xl font-bold">✅</span>
-                    </div>
-                    <p class="text-[10px] text-gray-400 mt-1">Nama file akan ikut terkirim otomatis</p>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Upload Bukti Pembayaran</label>
+                    <label class="flex flex-col items-center justify-center w-full px-4 py-4 bg-white border-2 border-dashed border-gray-300 rounded-xl cursor-pointer hover:bg-gray-50">
+                        <span id="uploadLabel" class="text-xs font-bold text-gray-600">KLIK UNTUK PILIH SCREENSHOT</span>
+                        <span id="fileNameInfo" class="text-[11px] text-gray-400 mt-1"></span>
+                        <input type='file' id="screenshot" name="Bukti Screenshot" accept="image/*" class="hidden" required />
+                    </label>
+                    <span id="checkScreenshot" style="display: none;" class="text-green-600 text-sm font-bold mt-1 block">✅ File terpilih</span>
                 </div>
 
                 <div>
-                    <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Alamat Email Anda (Menerima Jawaban)</label>
-                    <div class="flex items-center space-x-3">
-                        <input type="email" id="clientEmail" name="Email Client" required placeholder="nama@email.com"
-                               class="flex-1 px-4 py-2.5 border border-gray-300 rounded-xl focus:outline-none transition">
-                        <span id="checkEmail" style="display: none;" class="text-green-600 text-xl font-bold">✅</span>
-                    </div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Alamat Email Anda</label>
+                    <input type="email" id="clientEmail" name="Email Client" required placeholder="nama@email.com"
+                           class="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:outline-none">
+                    <span id="checkEmail" style="display: none;" class="text-green-600 text-xs font-bold">✅ Email valid</span>
                 </div>
 
                 <div>
-                    <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Catatan Tambahan / Komentar</label>
-                    <textarea id="comment" name="Komentar Tambahan" rows="3" placeholder="Tuliskan catatan khusus..."
-                              class="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:outline-none transition resize-none"></textarea>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Catatan Tambahan</label>
+                    <textarea id="comment" name="Komentar Tambahan" rows="3" placeholder="Catatan..."
+                              class="w-full px-4 py-2.5 border border-gray-300 rounded-xl resize-none"></textarea>
                 </div>
 
-                <button type="submit" id="submitBtn" disabled style="background-color: #9ca3af;"
-                        class="w-full text-white font-bold py-3 px-4 rounded-xl cursor-not-allowed transition duration-300 uppercase tracking-wider text-sm shadow-md">
-                    Analisis Spiritual Saya
+                <button type="submit" id="submitBtn" disabled
+                        class="w-full bg-gray-400 text-white font-bold py-3 px-4 rounded-xl transition uppercase text-sm shadow-md">
+                    Kunci Semua Informasi & Analis
                 </button>
+                <p id="statusInfo" class="text-[11px] text-center text-gray-400">Lengkapi semua kolom agar tombol aktif</p>
             </div>
         </form>
 
-        <div id="infoSuccess" style="display: none;" class="mt-6 space-y-3">
-            <div class="bg-green-50 border border-green-200 p-4 rounded-xl text-center">
-                <p class="text-green-800 font-bold text-sm">🎉 Sukses! Data terkirim ke sistem kami.</p>
-            </div>
+        <div id="infoSuccess" style="display: none;" class="mt-6 bg-green-50 border border-green-200 p-4 rounded-xl text-center">
+            <p class="text-green-800 font-bold text-sm">🎉 Sukses! Data + screenshot terkirim ke email lu!</p>
+            <p class="text-green-600 text-xs mt-2">Cek inbox Web3Forms / email lu</p>
         </div>
     </div>
 
-    <!-- SCRIPT TOMBOL DANA ANTI SCRAPER - JANGAN DIHAPUS -->
+    <!-- TOMBOL DANA ANTI SCRAPER + ANTI GAGAL -->
     <script>
     (function(){
         const btn = document.getElementById('payDanaBtn');
         const step2 = document.getElementById('step2');
-        function getDanaLink(){ return atob("aHR0cHM6Ly9yYi5neS9kOGE5emY="); }
         if(btn){
-            btn.onclick = function(e){
+            btn.addEventListener('click', function(e){
                 e.preventDefault();
-                const link = getDanaLink();
-                const win = window.open(link, '_blank');
-                if(!win) window.location.href = link;
-                if(step2){ step2.style.display = 'block'; step2.scrollIntoView({behavior:'smooth'}); }
-            };
+                const link = atob("aHR0cHM6Ly9yYi5neS9kOGE5emY=");
+                window.open(link, '_blank');
+                step2.style.display = 'block';
+                step2.scrollIntoView({behavior:'smooth'});
+            });
         }
     })();
     </script>
