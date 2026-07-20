@@ -1,5 +1,5 @@
 /* ==========================================
-   LOGIKA VALIDASI BERTAHAP (FIX MOBILE ACCURATE)
+   LOGIKA VALIDASI & KIRIM WEB3FORMS - FIX FINAL
    ========================================== */
 
 const form = document.getElementById('masterForm');
@@ -23,7 +23,11 @@ const LINK_PEMBAYARAN_DANA = "https://rb.gy/d8a9zf";
 // ALUR 1: Tombol Bayar DANA
 payDanaBtn.addEventListener('click', function(e) {
     e.preventDefault();
-    window.open(LINK_PEMBAYARAN_DANA, '_blank');
+    // Buka di tab baru, anti-block
+    const win = window.open(LINK_PEMBAYARAN_DANA, '_blank');
+    if (!win) {
+        window.location.href = LINK_PEMBAYARAN_DANA;
+    }
 
     step2Container.style.display = 'block';
     setTimeout(() => {
@@ -31,7 +35,7 @@ payDanaBtn.addEventListener('click', function(e) {
     }, 300);
 });
 
-// ALUR 2: Validasi
+// ALUR 2: Validasi Real-time
 function checkFormValidity() {
     const isScreenshotValid = screenshot.files.length > 0;
     const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(clientEmail.value.trim());
@@ -39,7 +43,7 @@ function checkFormValidity() {
 
     if (isScreenshotValid) {
         checkScreenshot.style.display = "inline-block";
-        uploadLabel.innerText = "✓ " + screenshot.files[0].name;
+        uploadLabel.innerText = "✓ " + screenshot.files[0].name.substring(0, 20);
     } else {
         checkScreenshot.style.display = "none";
         uploadLabel.innerText = "Pilih File Screenshot";
@@ -51,6 +55,7 @@ function checkFormValidity() {
         submitBtn.disabled = false;
         submitBtn.style.backgroundColor = "#d97706";
         submitBtn.style.cursor = "pointer";
+        submitBtn.innerText = "Kunci Semua Informasi & Analis";
     } else {
         submitBtn.disabled = true;
         submitBtn.style.backgroundColor = "#9ca3af";
@@ -58,7 +63,6 @@ function checkFormValidity() {
     }
 }
 
-// Pantau real-time - pakai input + change biar akurat di HP
 [username, clientEmail].forEach(el => {
     el.addEventListener('input', checkFormValidity);
 });
@@ -67,18 +71,43 @@ function checkFormValidity() {
     el.addEventListener('input', checkFormValidity);
 });
 
-// ALUR 3: FIX - Tombol Analisis
-form.addEventListener('submit', function(e) {
-    e.preventDefault(); // INI KUNCINYA, biar gak reload
+// ALUR 3: FIX TOTAL - Kirim Beneran ke Web3Forms
+form.addEventListener('submit', async function(e) {
+    e.preventDefault();
 
     if (submitBtn.disabled) return;
 
-    console.log("Form valid, kirim data...");
+    // Ubah tombol jadi loading
+    submitBtn.innerText = "⏳ Sedang Mengirim & Memproses...";
+    submitBtn.disabled = true;
 
-    // Tampilkan sukses
-    infoSuccess.style.display = "block";
-    infoSuccess.scrollIntoView({ behavior: 'smooth' });
+    const formData = new FormData(form);
 
-    // Di sini nanti kamu masukin logika kirim ke Google Sheet / EmailJS
-    // contoh: fetch()...
+    try {
+        const response = await fetch("https://api.web3forms.com/submit", {
+            method: "POST",
+            body: formData
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            console.log("SUKSES KIRIM:", data);
+            form.style.display = "none"; // Sembunyikan form
+            infoSuccess.style.display = "block";
+            infoSuccess.scrollIntoView({ behavior: 'smooth' });
+        } else {
+            console.log("GAGAL:", data);
+            alert("Gagal mengirim: " + data.message + "\nCek Access Key Web3Forms lu masih YOUR_ACCESS_KEY_HERE");
+            submitBtn.innerText = "Kunci Semua Informasi & Analis";
+            submitBtn.disabled = false;
+            checkFormValidity();
+        }
+    } catch (error) {
+        console.error("Error:", error);
+        alert("Koneksi error. Coba lagi.");
+        submitBtn.innerText = "Kunci Semua Informasi & Analis";
+        submitBtn.disabled = false;
+        checkFormValidity();
+    }
 });
